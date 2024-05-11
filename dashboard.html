@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educator Dashboard</title>
+<style>
+/* Stylesheet */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Educator Dashboard</h1>
+    <button onclick="window.location.href = 'create_quiz.html';">Add Quiz</button>
+    <button onclick="window.location.href = 'edit_quiz.html';">Edit Quiz</button>
+    <button onclick="deleteQuiz()">Delete Quiz</button>
+</div>
+
+<script>
+function deleteQuiz() {
+    // Implement delete quiz functionality
+    alert("Delete Quiz");
+}
+</script>
+
+</body>
+</html>

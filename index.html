@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Application</title>
+<style>
+/* Stylesheet */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="password"],
+select,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+  <form id="loginForm">
+      <h2>Login</h2>
+      <label for="userRole">User Role:</label>
+      <select id="userRole" name="userRole">
+          <option value="educator">Educator</option>
+          <option value="testtaker">Test Taker</option>
+      </select>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Login</button>
+  </form>
+
+  <script>
+      document.getElementById("loginForm").addEventListener("submit", function(event) {
+          event.preventDefault();
+          const userRole = document.getElementById("userRole").value;
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          
+          // Store user details in local storage
+          localStorage.setItem("userRole", userRole);
+          localStorage.setItem("username", username);
+          localStorage.setItem("password", password);
+          
+          // Redirect to dashboard
+          if (userRole === "educator") {
+              window.location.href = "dashboard.html";
+          } else if (userRole === "testtaker") {
+              // Redirect to test taker page
+          }
+      });
+  </script>
+</body>
+</html>
