@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Quiz</title>
+<style>
+/* Stylesheet */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+textarea,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Edit Quiz</h1>
+    <form id="editQuizForm">
+        <label for="question">Question:</label>
+        <textarea id="question" name="question" rows="3" required></textarea>
+        <label for="option1">Option 1:</label>
+        <input type="text" id="option1" name="option1" required>
+        <label for="option2">Option 2:</label>
+        <input type="text" id="option2" name="option2" required>
+        <label for="option3">Option 3:</label>
+        <input type="text" id="option3" name="option3" required>
+        <label for="option4">Option 4:</label>
+        <input type="text" id="option4" name="option4" required>
+        <label for="correctAnswer">Correct Answer:</label>
+        <input type="text" id="correctAnswer" name="correctAnswer" required>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+
+<script>
+// JavaScript for editing quiz questions
+document.getElementById("editQuizForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const question = document.getElementById("question").value;
+    const option1 = document.getElementById("option1").value;
+    const option2 = document.getElementById("option2").value;
+    const option3 = document.getElementById("option3").value;
+    const option4 = document.getElementById("option4").value;
+    const correctAnswer = document.getElementById("correctAnswer").value;
+
+    // Update the quiz question in local storage
+    let quizQuestions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+    // Assuming you have a way to identify the question to be edited, for example, by index
+    const questionIndex = /* Index of the question to be edited */;
+    quizQuestions[questionIndex] = {
+        question: question,
+        options: [option1, option2, option3, option4],
+        correctAnswer: correctAnswer
+    };
+    localStorage.setItem("quizQuestions", JSON.stringify(quizQuestions));
+
+    // Optionally, you can show a success message or redirect to another page
+    alert("Question edited successfully!");
+    // window.location.href = "dashboard.html"; // Redirect to dashboard
+});
+</script>
+
+</body>
+</html>

@@ -55,8 +55,33 @@ button:hover {
 
 <script>
 function deleteQuiz() {
-    // Implement delete quiz functionality
-    alert("Delete Quiz");
+    // Retrieve quiz questions from local storage
+    let quizQuestions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+
+    if (quizQuestions.length === 0) {
+        alert("No quiz questions available to delete.");
+        return;
+    }
+
+    // Display a prompt to select the question to delete
+    let questionIndex = prompt(`Enter the index of the question to delete (0-${quizQuestions.length - 1}):`);
+    questionIndex = parseInt(questionIndex);
+
+    if (isNaN(questionIndex) || questionIndex < 0 || questionIndex >= quizQuestions.length) {
+        alert("Invalid index. Please enter a valid index.");
+        return;
+    }
+
+    // Confirm deletion
+    let confirmDelete = confirm(`Are you sure you want to delete the question at index ${questionIndex}?`);
+    if (confirmDelete) {
+        // Remove the question from the array
+        quizQuestions.splice(questionIndex, 1);
+
+        // Update the local storage
+        localStorage.setItem("quizQuestions", JSON.stringify(quizQuestions));
+        alert("Quiz question deleted successfully.");
+    }
 }
 </script>
 
