@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Taker Page</title>
+<style>
+/* Stylesheet */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+      <h2>Test Taker Page</h2>
+      <div id="questionContainer"></div>
+      <button id="submitAnswer">Submit Answer</button>
+      <button id="nextQuestion" style="display:none;">Next Question</button>
+      <div id="timer"></div>
+      <div id="score"></div>
+  </div>
+
+  <script>
+      let quizQuestions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let timer;
+
+      function displayQuestion(index) {
+    const quizQuestions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
+    const question = quizQuestions[index];
+
+    if (question) {
+        document.getElementById("questionContainer").innerHTML = `
+            <h3>${question.question}</h3>
+            <ul>
+                <li><input type="radio" name="answer" value="${question.options[0]}">${question.options[0]}</li>
+                <li><input type="radio" name="answer" value="${question.options[1]}">${question.options[1]}</li>
+                <li><input type="radio" name="answer" value="${question.options[2]}">${question.options[2]}</li>
+                <li><input type="radio" name="answer" value="${question.options[3]}">${question.options[3]}</li>
+            </ul>
+        `;
+        startQuestionTimer(10); // 10 seconds timer
+    } else {
+        // No question found, display message or handle the situation accordingly
+        document.getElementById("questionContainer").innerHTML = "<p>No question found.</p>";
+        document.getElementById("submitAnswer").style.display = "none";
+        clearInterval(timer);
+    }
+}
+
+
+
+      function startQuestionTimer(timeLimit) {
+          let timeLeft = timeLimit;
+          document.getElementById("timer").innerText = `Time left: ${timeLeft} seconds`;
+          timer = setInterval(() => {
+              timeLeft--;
+              if (timeLeft <= 0) {
+                  clearInterval(timer);
+                  // Time's up, move to the next question
+                  moveToNextQuestion();
+              } else {
+                  document.getElementById("timer").innerText = `Time left: ${timeLeft} seconds`;
+              }
+          }, 1000);
+      }
+
+      function submitAnswer() {
+          const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+          if (selectedAnswer) {
+              // Check if the selected answer is correct and update score
+              if (selectedAnswer.value === quizQuestions[currentQuestionIndex].correctAnswer) {
+                  score += 1; // Update score for correct answer
+              }
+              document.getElementById("submitAnswer").style.display = "none";
+              document.getElementById("nextQuestion").style.display = "block";
+          } else {
+              alert("Please select an answer.");
+          }
+      }
+
+      function moveToNextQuestion() {
+          clearInterval(timer);
+          currentQuestionIndex++;
+          if (currentQuestionIndex < quizQuestions.length) {
+              displayQuestion(currentQuestionIndex);
+              document.getElementById("submitAnswer").style.display = "block";
+              document.getElementById("nextQuestion").style.display = "none";
+          } else {
+              // Quiz completed, display final score
+              document.getElementById("questionContainer").innerHTML = "";
+              document.getElementById("submitAnswer").style.display = "none";
+              document.getElementById("nextQuestion").style.display = "none";
+              document.getElementById("timer").innerText = "";
+              document.getElementById("score").innerText = `Your score is: ${score}`;
+          }
+      }
+
+      displayQuestion(currentQuestionIndex);
+
+      document.getElementById("submitAnswer").addEventListener("click", submitAnswer);
+      document.getElementById("nextQuestion").addEventListener("click", moveToNextQuestion);
+  </script>
+</body>
+</html>
